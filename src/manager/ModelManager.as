@@ -534,18 +534,20 @@ package manager
 					if(md5animParser._hierarchy[j])
 					{
 						var pId:int = md5animParser._hierarchy[j].parentIndex;
-						while(pId != -1)
+						if(pId != -1)
 						{
 							jointPose2 = skeletonPose.jointPoses[pId];
 							if(jointPose2)
 							{
 								mat.append(jointPose2.poseMat);
 							}
-							pId = md5animParser._hierarchy[pId].parentIndex;
+						}else
+						{
+							//
 						}
 					}
 					
-					jointPose.poseMat = tempMat;
+					jointPose.poseMat = mat;
 //					
 					for(var k:uint = 0;k<16;k++)
 					{
