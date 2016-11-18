@@ -491,6 +491,7 @@ package manager
 		
 		public function importMd5Anim(file:File):void
 		{
+			if(renderObject==null)return;
 			curMd5AnimFile = file;
 			var byteArray:ByteArray = FileHelper.readFileToByte(file.nativePath);
 			
@@ -519,47 +520,48 @@ package manager
 			var skeletonPose:SkeletonPose;
 			var jointPose:JointPose;
 			var mat:Matrix3D;
-			var skeletal:Skeletal;
-			var jointPose2:JointPose;
 			var tempMat:Matrix3D;
-			for(var i:int = 0;i<md5animParser._numFrames;++i)
+			for(var i:int = 0;i<md5animParser._numFrames;i++)
 			{
 				skeletonPose = md5animParser._clip[i];
-				for(var j:int = 0;j<skeletonPose.numJointPoses;++j)
+				for(var j:int = 0;j<skeletonPose.numJointPoses;j++)
 				{
 					jointPose = skeletonPose.jointPoses[j]
 					mat = jointPose.orientation.toMatrix3D();
 					mat.appendTranslation(jointPose.translation.x,jointPose.translation.y,jointPose.translation.z);
-					tempMat = mat.clone();
 					if(md5animParser._hierarchy[j])
 					{
-						var pId:int = md5animParser._hierarchy[j].parentIndex;
-						if(pId != -1)
+						var pIdx:int = md5animParser._hierarchy[j].parentIndex;
+						if(pIdx != -1)
 						{
-							jointPose2 = skeletonPose.jointPoses[pId];
+							var jointPose2:JointPose = skeletonPose.jointPoses[pIdx];
 							if(jointPose2)
 							{
 								mat.append(jointPose2.poseMat);
+								tempMat = mat.clone();
+								tempMat.prepend(renderObject.aniGroup.m_gammaSkeletals[j].m_inverseBindPose);
 							}
 						}else
 						{
-							//
+							tempMat = mat.clone();
 						}
 					}
 					
 					jointPose.poseMat = mat;
-//					
+					
 					for(var k:uint = 0;k<16;k++)
 					{
-						data.writeFloat(mat.rawData[k]);
+						data.writeFloat(tempMat.rawData[k]);
 					}
-//					data.writeFloat(jointPose.translation.x);
-//					data.writeFloat(jointPose.translation.y);
-//					data.writeFloat(jointPose.translation.z);
-//					data.writeFloat(jointPose.orientation.x);
-//					data.writeFloat(jointPose.orientation.y);
-//					data.writeFloat(jointPose.orientation.z);
-//					data.writeFloat(jointPose.orientation.w);
+					
+					//					trace("mat==========",mat.rawData);
+					//					data.writeFloat(jointPose.translation.x);
+					//					data.writeFloat(jointPose.translation.y);
+					//					data.writeFloat(jointPose.translation.z);
+					//					data.writeFloat(jointPose.orientation.x);
+					//					data.writeFloat(jointPose.orientation.y);
+					//					data.writeFloat(jointPose.orientation.z);
+					//					data.writeFloat(jointPose.orientation.w);
 				}
 			}
 			
