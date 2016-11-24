@@ -163,5 +163,37 @@ package utils
 			return ss==path.toLocaleLowerCase()?null:ss.replace(/\\/g,"/");
 		}
 		
+		/**
+		 * 获取该目录下指定格式的所有文件
+		 * @param path				文件路径
+		 * @param extension		指定格式
+		 * @return 						返回该文件夹下所有的指定格式文件
+		 */		
+		public static function getUnderPathChilds(path:String,extension:String):Array
+		{
+			var f:File = new File(path);
+			var result:Array=[];
+			if(f.exists)
+			{
+				var childs:Array = f.getDirectoryListing();
+				if(childs)
+				{
+					var tf:File;
+					for each(tf in childs)
+					{
+						if(tf.extension == extension)
+						{
+							var obj:Object = {};
+							obj.name = tf.name;
+							obj.data = tf;
+							result.push(obj);
+						}
+					}
+				}
+			}
+			
+			return result;
+		}
+		
 	}
 }

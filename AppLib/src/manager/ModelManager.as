@@ -359,7 +359,7 @@ package manager
 				createRenderScene();
 			}else
 			{
-				renderObject.y = renderScene.metaScene.getGridLogicHeightByPixel(renderObject.x,renderObject.z);
+				renderObject.y = 0;//renderScene.metaScene.getGridLogicHeightByPixel(renderObject.x,renderObject.z);
 				var lookAtTarget:ObjectContainer3D = new ObjectContainer3D();
 				lookAtTarget.position = renderObject.position;
 				BaseApplication.instance.camController.lookAtTarget = lookAtTarget;
