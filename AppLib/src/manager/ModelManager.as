@@ -12,6 +12,7 @@ package manager
 	import flash.geom.Matrix3D;
 	import flash.geom.Vector3D;
 	import flash.utils.ByteArray;
+	import flash.utils.CompressionAlgorithm;
 	import flash.utils.Dictionary;
 	import flash.utils.Endian;
 	
@@ -20,6 +21,7 @@ package manager
 	import deltax.appframe.BaseApplication;
 	import deltax.appframe.SceneGrid;
 	import deltax.common.Util;
+	import deltax.common.math.Quaternion;
 	import deltax.common.resource.DependentRes;
 	import deltax.common.resource.Enviroment;
 	import deltax.graphic.animation.skeleton.JointPose;
@@ -29,7 +31,6 @@ package manager
 	import deltax.graphic.model.AniSequenceHeaderInfo;
 	import deltax.graphic.model.AnimationGroup;
 	import deltax.graphic.model.PieceGroup;
-	import deltax.graphic.model.Skeletal;
 	import deltax.graphic.scenegraph.object.DeltaXSubGeometry;
 	import deltax.graphic.scenegraph.object.ObjectContainer3D;
 	import deltax.graphic.scenegraph.object.RenderObject;
@@ -549,10 +550,26 @@ package manager
 					
 					jointPose.poseMat = mat;
 					
-					for(var k:uint = 0;k<16;k++)
-					{
-						data.writeFloat(tempMat.rawData[k]);
-					}
+					
+					var q:Quaternion = new Quaternion();
+					q.fromMatrix(mat);
+					data.writeFloat(q.x);
+					data.writeFloat(q.y);
+					data.writeFloat(q.z);
+					data.writeFloat(q.w);
+					data.writeFloat(mat.position.x);
+					data.writeFloat(mat.position.y);
+					data.writeFloat(mat.position.z);
+					
+					var q2:Quaternion = new Quaternion();
+					q2.fromMatrix(tempMat);
+					data.writeFloat(q2.x);
+					data.writeFloat(q2.y);
+					data.writeFloat(q2.z);
+					data.writeFloat(q2.w);
+					data.writeFloat(tempMat.position.x);
+					data.writeFloat(tempMat.position.y);
+					data.writeFloat(tempMat.position.z);
 					
 					//					trace("mat==========",mat.rawData);
 					//					data.writeFloat(jointPose.translation.x);
@@ -565,7 +582,7 @@ package manager
 				}
 			}
 			
-			data.compress();
+			data.compress(CompressionAlgorithm.LZMA);
 			var fileName:String;
 			if(!saveAniPath || saveAniPath == "")
 			{
