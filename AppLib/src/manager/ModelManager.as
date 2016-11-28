@@ -286,7 +286,7 @@ package manager
 				}
 			}
 				
-			this.renderScene = BaseApplication.instance.createRenderScene(999999, new SceneGrid(20, 20), sceneCreateHandler);
+			this.renderScene = BaseApplication.instance.sceneManager.createRenderSceneByName(Enviroment.ResourceRootPath+"map/test/test.map", sceneCreateHandler);
 			if (this.renderScene.loaded)
 			{
 				this.renderScene.show();
