@@ -27,6 +27,7 @@ package manager
 	import deltax.graphic.animation.skeleton.JointPose;
 	import deltax.graphic.animation.skeleton.SkeletonPose;
 	import deltax.graphic.effect.render.Effect;
+	import deltax.graphic.manager.ResourceManager;
 	import deltax.graphic.map.MetaScene;
 	import deltax.graphic.model.AniSequenceHeaderInfo;
 	import deltax.graphic.model.AnimationGroup;
@@ -101,6 +102,13 @@ package manager
 		 */		
 		public function importMd5Mesh(file:File):void 
 		{
+			if(m_curRenderObject)
+			{
+				m_curRenderObject.remove();
+				m_curRenderObject.dispose();
+				ResourceManager.instance.releaseResource(m_curRenderObject.m_pieceGroups[0],ResourceManager.DESTROY_IMMED);
+				ResourceManager.instance.releaseResource(m_curRenderObject.aniGroup,ResourceManager.DESTROY_IMMED);
+			}
 			curMd5MeshFile = file;
 			var byteArray:ByteArray = FileHelper.readFileToByte(file.nativePath);
 			var str:String = byteArray.readMultiByte(byteArray.length,"cn-gb");
@@ -125,7 +133,7 @@ package manager
 		 */		
 		private function showMd5Preview(md5Parser:MD5MeshParser):void
 		{
-			//
+			
 			FileHelper.saveByteArrayToFile(FileHelper.readFileToByte(curMd5MeshFile.nativePath),(Enviroment.ResourceRootPath + "/test/mod/testModelTemp.md5mesh"));
 
 			var skeleton:Skeleton = curMd5MeshParser._skeleton;
@@ -280,13 +288,13 @@ package manager
 					var lookAtrenderObject:ObjectContainer3D = new ObjectContainer3D();
 					lookAtrenderObject.position = renderObject.position;
 					BaseApplication.instance.camController.lookAtTarget = lookAtrenderObject;
-					BaseApplication.instance.camController.setCameraDistToTarget(1000);
+					BaseApplication.instance.camController.setCameraDistToTarget(500);
 					
 					setPosition(renderObject.position);
 				}
 			}
 				
-			this.renderScene = BaseApplication.instance.sceneManager.createRenderSceneByName(Enviroment.ResourceRootPath+"map/test/test.map", sceneCreateHandler);
+			this.renderScene = BaseApplication.instance.sceneManager.createRenderSceneByName(Enviroment.ResourceRootPath+"map/test2/test2.map", sceneCreateHandler);
 			if (this.renderScene.loaded)
 			{
 				this.renderScene.show();
@@ -353,7 +361,7 @@ package manager
 			
 			renderObject = va;				
 			renderObject.movable = false;
-			renderObject.position = new Vector3D(3707,0,3228);
+			renderObject.position = new Vector3D(2560,0,2560);
 			
 			if(renderScene == null)
 			{
