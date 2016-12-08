@@ -169,30 +169,41 @@ package utils
 		 * @param extension		指定格式
 		 * @return 						返回该文件夹下所有的指定格式文件
 		 */		
-		public static function getUnderPathChilds(path:String,extension:String):Array
+		public static function getUnderPathChilds(path:String,extension:String,out:Array=null):Array
 		{
 			var f:File = new File(path);
-			var result:Array=[];
+			var result:Array=(out || []);
 			if(f.exists)
 			{
-				var childs:Array = f.getDirectoryListing();
-				if(childs)
+				checkFileExtension(f,extension,result);
+			}
+			
+			return result;
+		}
+		
+		private static function checkFileExtension(f:File,extension:String,out:Array):void
+		{
+			var childs:Array = f.getDirectoryListing();
+			if(childs)
+			{
+				var tf:File;
+				for each(tf in childs)
 				{
-					var tf:File;
-					for each(tf in childs)
+					if(tf.isDirectory)
+					{
+						checkFileExtension(tf,extension,out);
+					}else
 					{
 						if(tf.extension == extension)
 						{
 							var obj:Object = {};
 							obj.name = tf.name;
 							obj.data = tf;
-							result.push(obj);
-						}
+							out.push(obj);
+						}	
 					}
 				}
 			}
-			
-			return result;
 		}
 		
 	}

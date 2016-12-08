@@ -361,7 +361,7 @@ package manager
 			
 			renderObject = va;				
 			renderObject.movable = false;
-			renderObject.position = new Vector3D(2560,0,2560);
+			renderObject.position = new Vector3D(1000,0,1000);
 			
 			if(renderScene == null)
 			{
