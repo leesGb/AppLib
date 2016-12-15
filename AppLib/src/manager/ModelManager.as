@@ -522,7 +522,7 @@ package manager
 			data.endian = Endian.LITTLE_ENDIAN;
 			var version:uint = 1000;
 			data.writeUnsignedInt(version);	
-			ByteArrayUtil.WriteString(data,"stand");
+			ByteArrayUtil.WriteString(data,curMd5AnimFile.name.split(".")[0] + ".ani");
 			data.writeUnsignedInt(md5animParser._numFrames);
 			data.writeUnsignedInt(md5animParser._frameRate);
 			data.writeUnsignedInt(md5animParser._numJoints);

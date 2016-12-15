@@ -210,7 +210,6 @@
 				{
 					preEquippedItem.renderObject.setAniGroupByName((Enviroment.ResourceRootPath + equipConfigInfo.aniGroupFileName));
 				}
-                preEquippedItem.renderObject.setFigure(Vector.<uint>([equipConfigInfo.figureID]), Vector.<Number>([1]));
                 renderObject.addChildByLinkID(preEquippedItem.renderObject, nodeAndSocketID[0], nodeAndSocketID[1]);
                 renderObject = preEquippedItem.renderObject;
             } else 
@@ -322,7 +321,6 @@
             _local7.push(_arg2.orgFigureWeight);
             _local9.push(_arg2.orgFigureID);
 			_arg1.setAniGroupByName((Enviroment.ResourceRootPath + _arg5.aniGroupFileName));
-            _arg1.setFigure(_local9, _local7);
             if (((_arg6) && ((_arg6.length > 0)))){
                 _local17 = _arg5.scale;
             } else {
