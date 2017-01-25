@@ -536,57 +536,57 @@ package manager
 				for(var j:int = 0;j<skeletonPose.numJointPoses;j++)
 				{
 					jointPose = skeletonPose.jointPoses[j]
-					mat = jointPose.orientation.toMatrix3D();
-					mat.appendTranslation(jointPose.translation.x,jointPose.translation.y,jointPose.translation.z);
-					if(md5animParser._hierarchy[j])
-					{
-						var pIdx:int = md5animParser._hierarchy[j].parentIndex;
-						if(pIdx != -1)
-						{
-							var jointPose2:JointPose = skeletonPose.jointPoses[pIdx];
-							if(jointPose2)
-							{
-								mat.append(jointPose2.poseMat);
-								tempMat = mat.clone();
-								tempMat.prepend(renderObject.aniGroup.m_gammaSkeletals[j].m_inverseBindPose);
-							}
-						}else
-						{
-							tempMat = mat.clone();
-						}
-					}
-					
-					jointPose.poseMat = mat;
-					
-					
-					var q:Quaternion = new Quaternion();
-					q.fromMatrix(mat);
-					data.writeFloat(q.x);
-					data.writeFloat(q.y);
-					data.writeFloat(q.z);
-					data.writeFloat(q.w);
-					data.writeFloat(mat.position.x);
-					data.writeFloat(mat.position.y);
-					data.writeFloat(mat.position.z);
-					
-					var q2:Quaternion = new Quaternion();
-					q2.fromMatrix(tempMat);
-					data.writeFloat(q2.x);
-					data.writeFloat(q2.y);
-					data.writeFloat(q2.z);
-					data.writeFloat(q2.w);
-					data.writeFloat(tempMat.position.x);
-					data.writeFloat(tempMat.position.y);
-					data.writeFloat(tempMat.position.z);
+//					mat = jointPose.orientation.toMatrix3D();
+//					mat.appendTranslation(jointPose.translation.x,jointPose.translation.y,jointPose.translation.z);
+//					if(md5animParser._hierarchy[j])
+//					{
+//						var pIdx:int = md5animParser._hierarchy[j].parentIndex;
+//						if(pIdx != -1)
+//						{
+//							var jointPose2:JointPose = skeletonPose.jointPoses[pIdx];
+//							if(jointPose2)
+//							{
+//								mat.append(jointPose2.poseMat);
+//								tempMat = mat.clone();
+//								tempMat.prepend(renderObject.aniGroup.m_gammaSkeletals[j].m_inverseBindPose);
+//							}
+//						}else
+//						{
+//							tempMat = mat.clone();
+//						}
+//					}
+//					
+//					jointPose.poseMat = mat;
+//					
+//					
+//					var q:Quaternion = new Quaternion();
+//					q.fromMatrix(mat);
+//					data.writeFloat(q.x);
+//					data.writeFloat(q.y);
+//					data.writeFloat(q.z);
+//					data.writeFloat(q.w);
+//					data.writeFloat(mat.position.x);
+//					data.writeFloat(mat.position.y);
+//					data.writeFloat(mat.position.z);
+//					
+//					var q2:Quaternion = new Quaternion();
+//					q2.fromMatrix(tempMat);
+//					data.writeFloat(q2.x);
+//					data.writeFloat(q2.y);
+//					data.writeFloat(q2.z);
+//					data.writeFloat(q2.w);
+//					data.writeFloat(tempMat.position.x);
+//					data.writeFloat(tempMat.position.y);
+//					data.writeFloat(tempMat.position.z);
 					
 					//					trace("mat==========",mat.rawData);
-					//					data.writeFloat(jointPose.translation.x);
-					//					data.writeFloat(jointPose.translation.y);
-					//					data.writeFloat(jointPose.translation.z);
-					//					data.writeFloat(jointPose.orientation.x);
-					//					data.writeFloat(jointPose.orientation.y);
-					//					data.writeFloat(jointPose.orientation.z);
-					//					data.writeFloat(jointPose.orientation.w);
+										data.writeFloat(jointPose.translation.x);
+										data.writeFloat(jointPose.translation.y);
+										data.writeFloat(jointPose.translation.z);
+										data.writeFloat(jointPose.orientation.x);
+										data.writeFloat(jointPose.orientation.y);
+										data.writeFloat(jointPose.orientation.z);
+										data.writeFloat(jointPose.orientation.w);
 				}
 			}
 			
